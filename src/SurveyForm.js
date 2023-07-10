@@ -38,9 +38,8 @@ class SurveyForm extends React.Component {
     let options = [];
     for (let colour of this.state.all_colours) {
       let e = (
-        <React.Fragment>
+        <React.Fragment key={colour.value}>
           <input
-            key={colour.value}
             name="colour"
             type="radio"
             value={colour.value}

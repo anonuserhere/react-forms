@@ -46,9 +46,8 @@ export default class Booking extends React.Component {
     let seatOptions = [];
     for (let seat of this.state.all_seating) {
       let e = (
-        <React.Fragment>
+        <React.Fragment key={seat.value}>
           <input
-            key={seat.value}
             name="seating"
             type="radio"
             value={seat.value}
