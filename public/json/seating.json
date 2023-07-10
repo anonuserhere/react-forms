@@ -1,0 +1,14 @@
+[
+  {
+    "display": "Indoors",
+    "value": "indoors"
+  },
+  {
+    "display": "Alfresco",
+    "value": "alfresco"
+  },
+  {
+    "display": "VIP",
+    "value": "VIP"
+  }
+]

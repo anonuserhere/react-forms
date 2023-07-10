@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class SurveyForm extends React.Component {
   state = {
@@ -7,56 +8,39 @@ class SurveyForm extends React.Component {
     country: "",
     fruits: [],
     contact: [],
+    all_colours: [],
+    all_countries: [],
+    all_fruits: [],
   };
 
-  countries = [
-    {
-      display: "singapore",
-      value: "sg",
-    },
-    {
-      display: "malaysia",
-      value: "my",
-    },
-    {
-      display: "indonesia",
-      value: "id",
-    },
-  ];
+  async componentDidMount() {
+    // axios.get("./json/colours.json").then((r) => (this.fruits = r.data));
+    // axios.get("./json/countries.json").then((r) => (this.colours = r.data));
+    // axios.get("./json/fruits.json").then((r) => (this.fruits = r.data));
 
-  fruits = [
-    {
-      display: "apple",
-      value: "apple",
-    },
-    {
-      display: "banana",
-      value: "banana",
-    },
-    {
-      display: "cherries",
-      value: "cherries",
-    },
-  ];
+    let r = await axios.get("./json/colours.json");
+    let all_colours = r.data;
 
-  colours = [
-    {
-      display: "red",
-      value: "red",
-    },
-    {
-      display: "green",
-      value: "green",
-    },
-    { display: "blue", value: "blue" },
-  ];
+    let s = await axios.get("./json/countries.json");
+    let all_countries = s.data;
 
-  renderColours() {
+    let t = await axios.get("./json/fruits.json");
+    let all_fruits = t.data;
+
+    this.setState({
+      all_fruits: all_fruits,
+      all_countries: all_countries,
+      all_colours: all_colours,
+    });
+  }
+
+  renderColours = () => {
     let options = [];
-    for (let colour of this.colours) {
+    for (let colour of this.state.all_colours) {
       let e = (
-        <React.Fragment key={colour.value}>
+        <React.Fragment>
           <input
+            key={colour.value}
             name="colour"
             type="radio"
             value={colour.value}
@@ -69,7 +53,7 @@ class SurveyForm extends React.Component {
       options.push(e);
     }
     return options;
-  }
+  };
 
   updateFormField = (event) => {
     this.setState({
@@ -163,7 +147,7 @@ class SurveyForm extends React.Component {
             value={this.state.country}
             onChange={this.updateFormField}
           >
-            {this.countries.map((c) => (
+            {this.state.all_countries.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.display}
               </option>
@@ -172,7 +156,7 @@ class SurveyForm extends React.Component {
         </div>
         <div>
           <label>Favourite Fruits:</label>
-          {this.fruits.map((f) => (
+          {this.state.all_fruits.map((f) => (
             <React.Fragment>
               <input
                 type="checkbox"

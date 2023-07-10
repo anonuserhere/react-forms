@@ -1,0 +1,11 @@
+[
+  {
+    "display": "red",
+    "value": "red"
+  },
+  {
+    "display": "green",
+    "value": "green"
+  },
+  { "display": "blue", "value": "blue" }
+]

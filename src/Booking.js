@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 export default class Booking extends React.Component {
   state = {
@@ -8,22 +9,32 @@ export default class Booking extends React.Component {
     smoking: "", //dropdown
     appetizer: [], //checkbox
     submitted: false,
+    all_seating: [],
   };
 
-  seating = [
-    {
-      display: "Indoors",
-      value: "indoors",
-    },
-    {
-      display: "Alfresco",
-      value: "alfresco",
-    },
-    {
-      display: "VIP",
-      value: "VIP",
-    },
-  ];
+  // seating = [
+  //   {
+  //     display: "Indoors",
+  //     value: "indoors",
+  //   },
+  //   {
+  //     display: "Alfresco",
+  //     value: "alfresco",
+  //   },
+  //   {
+  //     display: "VIP",
+  //     value: "VIP",
+  //   },
+  // ];
+
+  async componentDidMount() {
+    let response = await axios.get("./json/seating.json");
+    let all_seating = response.data;
+
+    this.setState({
+      all_seating: all_seating,
+    });
+  }
 
   updateFormField = (event) => {
     this.setState({
@@ -31,12 +42,13 @@ export default class Booking extends React.Component {
     });
   };
 
-  renderSeating() {
+  renderSeating = () => {
     let seatOptions = [];
-    for (let seat of this.seating) {
+    for (let seat of this.state.all_seating) {
       let e = (
-        <React.Fragment key={seat.value}>
+        <React.Fragment>
           <input
+            key={seat.value}
             name="seating"
             type="radio"
             value={seat.value}
@@ -49,7 +61,7 @@ export default class Booking extends React.Component {
       seatOptions.push(e);
     }
     return seatOptions;
-  }
+  };
 
   updateFood = (event) => {
     const { value } = event.target;
